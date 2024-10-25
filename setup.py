@@ -16,10 +16,10 @@ def get_requirements(file_path:str) -> list[str]:
     return requirements
 
 
-setup(name='pycharm',
+setup(name='mlproject',
       version='0.1',
       packages=find_packages(),
-      author='<NAME>',
-      author_email='<EMAIL>',
+      author='yashveer',
+      author_email='yashveerthakur17@gmail.com',
       install_requires=get_requirements("requirements.txt")
       )

@@ -1,0 +1,17 @@
+#about dvc
+
+dvc does version control for the data
+
+1. Untract the data from your github, ie raw.csv
+2. dvc init
+   dvc add artifact\raw.csv
+
+   this will create a gitignore and raw.csv.dvc that will hold a hash
+   wrt to the original file that will change with the changes in the file
+
+   we need to track the .gitingore and the .dvc to track the
+   original data changes for changes without actually commiting the whole original file
+
+   everytime dvc add is done the hash changes
+
+

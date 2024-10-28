@@ -1,6 +1,6 @@
-'''
+"""
 PYMYSQL NO LONGER WORKS WITH PANDAS 2.x SO HAD TO SHIFT TO MORE MAIN STREAM SQLALCHEMY
-WAS PREVIUOUSLY TRYING TO USE A CURSOR TO BYPASS THIS ISSUE BUT DIDNT WORK...
+WAS PREVIOUSLY TRYING TO USE A CURSOR TO BYPASS THIS ISSUE BUT DIDNT WORK...
 
 import os
 import sys
@@ -51,7 +51,7 @@ def read_sql_data():
         # Ensure the MySQL connection is closed
         if connection:
             connection.close()
-            logging.info('MySQL connection closed')'''
+            logging.info('MySQL connection closed')"""
 
 
 

@@ -2,7 +2,7 @@ from src.mlproject.logger import logging
 from src.mlproject.exceptions import CustomException
 import sys
 from src.mlproject.components.data_ingestion import DataIngestion
-from src.mlproject.components.data_ingestion import DataIngestionConfig
+#from src.mlproject.components.data_ingestion import DataIngestionConfig
 
 
 if __name__ == '__main__':

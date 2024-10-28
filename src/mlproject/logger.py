@@ -1,4 +1,4 @@
-#generic logging code from python documentation
+#generic logging script from python documentation
 
 import logging
 import os

@@ -1,7 +1,10 @@
 import sys
 from src.mlproject.logger import logging
 
+#generic exception handling script , can be used in any project
+
 def error_message_detail(error, error_detail: sys):
+    #ONLY 3RD PART IS RELEVANT, read docs for more
     _, _, exc_tb = error_detail.exc_info()
     file_name = exc_tb.tb_frame.f_code.co_filename
     error_message = (

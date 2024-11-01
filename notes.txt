@@ -14,13 +14,12 @@ dvc does version control for the data
 
    everytime dvc add is done the hash changes
 
-3. to go back to older versions of data first go to older version of .dvc by using git
-    git log
+3. to go back to older versions of data first go to older version of .dvc by using git log
     #get log sequence
     git checkout <log seq>
 
     #will take back all the commited code inc the .dvc but not
-    data because it wasnt commited to begin with
+    data because it wasn't commited to begin with
 
     #use dvc checkout
     dvc checkout

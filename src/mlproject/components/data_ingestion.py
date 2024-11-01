@@ -1,5 +1,8 @@
 import os
 import sys
+
+import pandas as pd
+
 from src.mlproject.exceptions import CustomException
 from src.mlproject.logger import logging
 #import pandas as pd
@@ -23,8 +26,12 @@ class DataIngestion:
             logging.info('Reading from mysql database')
 
             #from utils
-            df=read_sql_data()
+            #df=read_sql_data()
+##################
+            df=pd.read_csv(os.path.join('notebook/','raw.csv'))
 
+
+##################
             #making dir
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
             # conv df to csv for storage, raw

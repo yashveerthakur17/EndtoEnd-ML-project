@@ -63,6 +63,8 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from src.mlproject.logger import logging
 from src.mlproject.exceptions import CustomException
+import pickle
+import numpy as np
 
 # Load the environment variables from .env
 load_dotenv()
@@ -90,3 +92,19 @@ def read_sql_data():
     except Exception as e:
         logging.error(f"Error reading SQL data: {e}")
         raise CustomException(e, sys)
+
+    #getting pickle file from obj and its path
+def save_object(file_path,obj):
+    try:
+        dir_path= os.path.dirname(file_path)
+
+        os.makedirs(dir_path, exist_ok=True)
+
+        with open(file_path,'wb') as file_obj:
+            pickle.dump(obj,file_obj)
+
+
+
+
+    except Exception as e:
+        raise CustomException

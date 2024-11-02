@@ -36,10 +36,10 @@ class DataTransformation:
         try:
             #hard coded, make general purpose if had to use different dataset
             numerical_columns=['writing_score','reading_score']
-            categorical_columns=[
+            categorical_columns = [
                 'gender',
                 'race_ethnicity',
-                'parental_level_education',
+                'parental_level_of_education',  # Corrected column name
                 'lunch',
                 'test_preparation_course'
             ]
@@ -58,7 +58,7 @@ class DataTransformation:
             ])
 
             logging.info(f"Categorical Columns:{categorical_columns}")
-            logging.info(f'Numerical_columns:{categorical_columns}')
+            logging.info(f'Numerical_columns:{numerical_columns}')
 
             #column transformer takes a list of pipelines
             preprocessor=ColumnTransformer(
@@ -87,24 +87,29 @@ class DataTransformation:
             target_column_name='math_score'
             numerical_columns=['writing_score','reading_score']
 
+            #logging.info('printing reading test and train files')
+            #print("Target column name:", target_column_name)
+
+
             #segregating independent and dependent data set
-            input_feature_train_df=train_df.drop(columns=[target_column_name])
+            input_feature_train_df=train_df.drop(columns=target_column_name)
             target_feature_train_df=train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name])
+            input_feature_test_df = test_df.drop(columns=target_column_name)
             target_feature_test_df = test_df[target_column_name]
 
             logging.info('preprocessing applied on train and test data')
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
+            input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
             # not fit_transform due to data leakage concept imp****
-            input_features_test_arr=preprocessing_obj.fit(input_feature_test_df)
+            #input_features_test_arr=preprocessing_obj.fit(S
 
 
             #recombining
             #c_ is concat in np
             train_arr=np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
-            test_arr=np.c_[input_feature_train_arr, np.array(target_feature_test_df)]
+            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
             logging.info(f'Saved preprocessing obj')
 

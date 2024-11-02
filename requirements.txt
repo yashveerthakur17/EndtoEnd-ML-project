@@ -1,8 +1,11 @@
-Numpy
-Pandas
+numpy
+pandas
 python-dotenv
 mysql-connector-python
 pymysql
 scikit-learn
 sqlalchemy
+xgboost
+#catboost
+dill
 #-e .

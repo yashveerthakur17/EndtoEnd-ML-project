@@ -5,7 +5,7 @@ from statistics import median
 import pandas as pd
 import numpy as np
 from pandas.core.interchange.from_dataframe import categorical_column_to_series
-from pywin32_testutil import testmain
+#from pywin32_testutil import testmain
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.compose import ColumnTransformer
 

@@ -60,10 +60,12 @@ import os
 import sys
 import pandas as pd
 from dotenv import load_dotenv
+from sklearn.model_selection import GridSearchCV
 from sqlalchemy import create_engine
 from src.mlproject.logger import logging
 from src.mlproject.exceptions import CustomException
 import pickle
+from sklearn.model_selection import GridSearchCV, train_test_split
 import numpy as np
 
 # Load the environment variables from .env
@@ -102,7 +104,34 @@ def save_object(file_path,obj):
 
         with open(file_path,'wb') as file_obj:
             pickle.dump(obj,file_obj)
+    except Exception as e:
+        raise CustomException(e, sys)
 
+def evaluate_model(X_train, X_test, y_train, y_test):
+    try:
+
+        report={}
+
+        for i in range(len(list(models))):
+            model=list(models.values())[i]
+            para=param[list(models.keys())[i]]
+
+            gs=GridSearchCV(model, param_grid=para,cv=2)
+            gs.fit(X_train, y_train)
+
+            model.set_params(**gs.best_params_)
+            model.fit(X_train, y_train)
+
+            y_train_pred = model.predict(X_train)
+            y_test_pred = model.predict(X_test)
+
+            train_score = model.score(X_train, y_train)
+            test_score = model.score(X_test, y_test)
+            report[list(models.keys())[i]]=train_score
+
+
+    except Exception as e:
+        raise CustomException(e, sys)
 
 
 

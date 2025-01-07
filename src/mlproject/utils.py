@@ -25,6 +25,16 @@ port = os.getenv("PORT", "3306")  # Default to 3306 if PORT is not provided
 # Create the SQLAlchemy engine using the loaded credentials
 engine = create_engine(f'mysql+pymysql://{user}:{password}@{host}:{port}/{db}')
 
+def load_env_variables():
+    load_dotenv()
+    return {
+        "host": os.getenv("HOST"),
+        "user": os.getenv("USER"),
+        "password": os.getenv("PASSWORD"),
+        "db": os.getenv("DB"),
+        "port": os.getenv("PORT", "3306"),
+    }
+
 def read_sql_data():
     logging.info('Reading SQL database started')
     try:

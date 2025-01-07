@@ -87,7 +87,7 @@ class ModelTrainer:
 
             # Check if the best model meets the threshold
             if best_model_score < 0.6:
-                raise CustomException("No satisfactory model found. Best model score below threshold.")
+                raise CustomException("No satisfactory model found. Best model score below threshold.","")
 
             logging.info(f"All model scores: {model_report}")
             logging.info(f"Best model: {best_model_name} with R2 score: {best_model_score}")

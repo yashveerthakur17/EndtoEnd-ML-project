@@ -1,0 +1,18 @@
+testt/
+├── artifact/
+│   ├── model.pkl
+│   ├── preprocessor.pkl
+│   ├── train.csv
+│   ├── test.csv
+│   ├── raw.csv
+├── logs/
+│   ├── 2025_01_07_18_31_14.log
+├── src/
+│   ├── mlproject/
+│   │   ├── components/
+│   │   │   ├── data_ingestion.py
+│   │   │   ├── data_transformation.py
+│   │   │   ├── model_trainer.py
+│   │   ├── logger.py
+│   │   ├── exceptions.py
+│   │   ├── utils.py

@@ -1,53 +1,47 @@
-from src.mlproject.components.model_trainer import ModelTrainer
-from src.mlproject.logger import logging
-from src.mlproject.exceptions import CustomException
-import sys
-from src.mlproject.components.data_ingestion import DataIngestion
-#from src.mlproject.components.data_ingestion import DataIngestionConfig
+from flask import Flask, request, render_template
 import numpy as np
+import pandas as pd
 
-from src.mlproject.components.data_transformation import DataTransformation, DataTransformationConfig
+from sklearn.preprocessing import StandardScaler
+from src.pipeline.predict_pipeline import CustomData, PredictPipeline
 
-#from src.mlproject.components.data_transformation import DataTransformationConfig
+application = Flask(__name__)
 
-if __name__ == '__main__':
-    logging.info('Test execution started')
+app = application
 
-    """try:
-        data_ingestion=DataIngestion()
-        #data_ingestion_config=DataTransformationConfig()
-        #data_ingestion.initiate_data_ingestion()
-        train_data_path,test_data_path=data_ingestion.initiate_data_ingestion()
 
-        #data_transformation_config=DataTransformationConfig
+## Route for a home page
 
-        data_transformation=DataTransformation()
-        data_transformation.initiate_data_transformation(train_data_path,test_data_path)
+@app.route('/')
+def index():
+    return render_template('index.html')
 
-        model_trainer = ModelTrainer()
-        r2_score = model_trainer.initiate_model_trainer(train_array, test_array)
-        logging.info(f"Model training completed with R2 score: {r2_score}")
 
-    except Exception as e:  # Catch the original exception
-        logging.error('An exception occurred', exc_info=True)  # Optional: Logs traceback
-        raise CustomException(e, sys)  # Wrap it in CustomException"""
+@app.route('/predictdata', methods=['GET', 'POST'])
+def predict_datapoint():
+    if request.method == 'GET':
+        return render_template('home.html')
+    else:
+        data = CustomData(
+            gender=request.form.get('gender'),
+            race_ethnicity=request.form.get('ethnicity'),
+            parental_level_of_education=request.form.get('parental_level_of_education'),
+            lunch=request.form.get('lunch'),
+            test_preparation_course=request.form.get('test_preparation_course'),
+            reading_score=float(request.form.get('writing_score')),
+            writing_score=float(request.form.get('reading_score'))
 
-    try:
-        # Step 1: Data Ingestion
-        data_ingestion = DataIngestion()
-        train_path, test_path = data_ingestion.initiate_data_ingestion()
-        logging.info(f"Data ingestion complete. Train path: {train_path}, Test path: {test_path}")
+        )
+        pred_df = data.get_data_as_data_frame()
+        print(pred_df)
+        print("Before Prediction")
 
-        # Step 2: Data Transformation
-        data_transformation = DataTransformation()
-        train_array, test_array, preprocessor_path = data_transformation.initiate_data_transformation(train_path,
-                                                                                                      test_path)
-        logging.info(f"Data transformation complete. Preprocessor saved at: {preprocessor_path}")
+        predict_pipeline = PredictPipeline()
+        print("Mid Prediction")
+        results = predict_pipeline.predict(pred_df)
+        print("after Prediction")
+        return render_template('home.html', results=results[0])
 
-        # Step 3: Model Training
-        model_trainer = ModelTrainer()
-        r2_score = model_trainer.initiate_model_trainer(train_array, test_array)
-        logging.info(f"Model training complete. R2 Score: {r2_score}")
 
-    except Exception as e:
-        raise CustomException(e, sys)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

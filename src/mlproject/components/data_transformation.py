@@ -113,10 +113,13 @@ class DataTransformation:
 
             logging.info(f'Saved preprocessing obj')
 
+            logging.info(
+                f"Attempting to save preprocessor object at {self.data_transformation_config.preprocessor_obj_file_path}")
             save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
+            logging.info("Preprocessor object saved successfully.")
 
             return(
                 train_arr,

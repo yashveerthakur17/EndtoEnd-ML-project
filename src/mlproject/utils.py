@@ -25,15 +25,6 @@ port = os.getenv("PORT", "3306")  # Default to 3306 if PORT is not provided
 # Create the SQLAlchemy engine using the loaded credentials
 engine = create_engine(f'mysql+pymysql://{user}:{password}@{host}:{port}/{db}')
 
-def load_env_variables():
-    load_dotenv()
-    return {
-        "host": os.getenv("HOST"),
-        "user": os.getenv("USER"),
-        "password": os.getenv("PASSWORD"),
-        "db": os.getenv("DB"),
-        "port": os.getenv("PORT", "3306"),
-    }
 
 def read_sql_data():
     logging.info('Reading SQL database started')
@@ -50,16 +41,19 @@ def read_sql_data():
         raise CustomException(e, sys)
 
     #getting pickle file from obj and its path
-def save_object(file_path,obj):
+def save_object(file_path, obj):
     try:
-        dir_path= os.path.dirname(file_path)
-
+        logging.info(f"Saving object to {file_path}")
+        dir_path = os.path.dirname(file_path)
         os.makedirs(dir_path, exist_ok=True)
 
-        with open(file_path,'wb') as file_obj:
-            pickle.dump(obj,file_obj)
+        with open(file_path, 'wb') as file_obj:
+            pickle.dump(obj, file_obj)
+        logging.info(f"Object saved successfully at {file_path}")
     except Exception as e:
+        logging.error(f"Error saving object to {file_path}: {e}")
         raise CustomException(e, sys)
+
 
 def evaluate_models(X_train, y_train, X_test, y_test, models, param):
     try:
